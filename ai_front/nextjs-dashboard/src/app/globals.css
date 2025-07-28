@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix Background Color */
+body {
+  @apply bg-white text-gray-900;
+}
+
+/* Sidebar */
+.sidebar {
+  @apply bg-gray-50 border-r border-gray-200;
+}
+
+/* Navbar */
+.navbar {
+  @apply bg-white shadow-md border-b border-gray-200;
+}
+
+/* Feature & Model Cards */
+.card {
+  @apply bg-white p-4 shadow-sm border rounded-lg;
+}
+
+/* Mobile Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    transition: left 0.3s;
+  }
+  .sidebar-collapsed {
+    left: 0;
+  }
+}
