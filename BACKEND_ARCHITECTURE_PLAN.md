@@ -62,7 +62,15 @@ permissionMode: "acceptEdits"
 | **File Generation** | ✅ Working | ✅ Optimized |
 | **Error Rate** | <1% | <0.1% |
 
-## 🚀 **PHASE 2: Multi-Service AI Platform (Weeks 5-8)**
+## 🚀 **PHASE 2: Multi-Service AI Platform (Weeks 5-12)**
+
+### **📋 Phase 2 Split Strategy**
+- **Phase 2A (Weeks 5-8)**: Add AI Services with Current Architecture
+- **Phase 2B (Weeks 9-12)**: Enterprise Security Upgrade (Kong + Keycloak)
+
+---
+
+## 🔧 **PHASE 2A: AI Services Expansion (Weeks 5-8)**
 
 ### **🎯 Next Priority Services**
 
@@ -171,7 +179,7 @@ async def summarize_text(text: str, max_length: int = 150):
     return {"summary": summary[0]["summary_text"]}
 ```
 
-### **🏗️ Updated Architecture (Phase 2)**
+### **🏗️ Phase 2A Architecture (Current + AI Services)**
 
 ```
 ┌─────────────────┐    ┌─────────────────┐
@@ -185,16 +193,16 @@ async def summarize_text(text: str, max_length: int = 150):
             ┌─────────────────┐ │ ┌─────────────────┐
             │  Code Gen       │ │ │  Trading        │
             │  (Node.js)      │ │ │  (Go)           │
-            │  Port 8001      │ │ │  Port 8002      │
+            │  Port 8002      │ │ │  Port 8003      │
             └─────────────────┘ │ └─────────────────┘
                        ┌─────────────────┐
                        │  Image/Text     │
                        │  (Python)       │
-                       │  Port 8003      │
+                       │  Port 8004      │
                        └─────────────────┘
 ```
 
-## 📋 **Implementation Roadmap**
+## 📋 **Phase 2A Implementation Roadmap (Weeks 5-8)**
 
 ### **Week 5-6: Trading Analysis Service**
 - [ ] **Setup Go development environment**
@@ -205,32 +213,169 @@ async def summarize_text(text: str, max_length: int = 150):
 - [ ] **Add portfolio optimization**
 - [ ] **Deploy with Docker**
 
-### **Week 7-8: Image Processing Service**
+### **Week 7-8: Image & Text Processing Services**
 - [ ] **Setup Python + OpenCV environment**
 - [ ] **Implement image enhancement algorithms**
 - [ ] **Add object detection** (YOLO integration)
-- [ ] **Neural style transfer** implementation
-- [ ] **Image classification** models
-- [ ] **Batch processing** capabilities
+- [ ] **Setup spaCy + Transformers for NLP**
+- [ ] **Sentiment analysis** API
+- [ ] **Text summarization** capabilities
 - [ ] **File storage** integration (AWS S3/local)
 
-### **Week 9-10: Text Analysis Service**
-- [ ] **Setup spaCy + Transformers**
-- [ ] **Sentiment analysis** API
-- [ ] **Named entity recognition**
-- [ ] **Text summarization**
-- [ ] **Language detection**
-- [ ] **Topic modeling**
-- [ ] **Text generation** capabilities
+---
 
-### **Week 11-12: API Gateway & Integration**
-- [ ] **Node.js API Gateway** development
-- [ ] **Load balancing** implementation
-- [ ] **Service discovery**
-- [ ] **Rate limiting** per service
-- [ ] **Authentication** middleware
-- [ ] **Request routing** optimization
-- [ ] **Frontend integration** for all services
+## 🏛️ **PHASE 2B: Enterprise Security Upgrade (Weeks 9-12)**
+
+### **🎯 Kong + Keycloak Enterprise Architecture**
+
+#### **Why This Upgrade?**
+- ✅ **Enterprise-grade security** with proper RBAC/ABAC
+- ✅ **Centralized identity management** with SSO capabilities  
+- ✅ **API Gateway best practices** with rate limiting, monitoring
+- ✅ **Audit trails and compliance** for production environments
+- ✅ **High availability and scalability** for enterprise workloads
+
+### **🏗️ Phase 2B Target Architecture**
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Keycloak      │    │   Kong Gateway  │
+│   (Next.js)     │────│   (Identity)    │────│   (API Gateway) │
+│   Port 3000     │    │   Port 8080     │    │   Port 8000     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                               ┌────────┼────────┐
+                                               │        │        │
+                                    ┌─────────────────┐ │ ┌─────────────────┐
+                                    │  Code Gen       │ │ │  Trading        │
+                                    │  (Node.js)      │ │ │  (Go)           │
+                                    │  Port 8002      │ │ │  Port 8003      │
+                                    └─────────────────┘ │ └─────────────────┘
+                                               ┌─────────────────┐
+                                               │  Image/Text     │
+                                               │  (Python)       │
+                                               │  Port 8004      │
+                                               └─────────────────┘
+```
+
+### **🔧 Week 9-10: Keycloak Setup & Configuration**
+- [ ] **Deploy Keycloak** with Docker/Kubernetes
+- [ ] **Configure AI Platform Realm** with proper settings
+- [ ] **Setup Client Applications** (Frontend, Services)
+- [ ] **Configure RBAC** (Admin, User, Developer roles)
+- [ ] **Setup User Federation** (LDAP/AD integration if needed)
+- [ ] **Configure SSO** and social login providers
+- [ ] **SSL/TLS configuration** and security hardening
+
+#### **Keycloak Configuration Examples**
+```yaml
+# Realm: ai-platform
+clients:
+  - client_id: nextjs-frontend
+    client_type: public
+    redirect_uris: ["http://localhost:3000/*"]
+    web_origins: ["http://localhost:3000"]
+  
+  - client_id: kong-gateway
+    client_type: confidential
+    service_accounts_enabled: true
+    
+roles:
+  - name: ai-platform-admin
+    description: Full platform access
+  - name: ai-platform-user  
+    description: Standard user access
+  - name: ai-platform-developer
+    description: Code generation access
+```
+
+### **🚪 Week 11-12: Kong Gateway Integration**
+- [ ] **Deploy Kong Gateway** with PostgreSQL backend
+- [ ] **Install Kong OIDC Plugin** for Keycloak integration
+- [ ] **Configure Service Routes** for all microservices
+- [ ] **Setup Rate Limiting** per user/role
+- [ ] **Add Security Plugins** (CORS, IP restriction, ACL)
+- [ ] **Configure Monitoring** (Prometheus metrics, logging)
+- [ ] **Load Testing** and performance optimization
+
+#### **Kong Configuration Examples**
+```yaml
+# Kong Services & Routes
+services:
+  - name: codegen-service
+    url: http://codegen:8002
+    routes:
+      - name: codegen-route
+        paths: ["/api/codegen"]
+        
+  - name: trading-service  
+    url: http://trading:8003
+    routes:
+      - name: trading-route
+        paths: ["/api/trading"]
+
+# OIDC Plugin Configuration
+plugins:
+  - name: oidc
+    config:
+      client_id: kong-gateway
+      client_secret: ${KEYCLOAK_CLIENT_SECRET}
+      discovery: http://keycloak:8080/auth/realms/ai-platform/.well-known/openid_configuration
+      introspection_endpoint: http://keycloak:8080/auth/realms/ai-platform/protocol/openid-connect/token/introspect
+      
+  - name: rate-limiting
+    config:
+      minute: 100
+      hour: 1000
+```
+
+### **🔄 Authentication Flow (Phase 2B)**
+```
+1. [User] → Login via Keycloak → [Access Token + Refresh Token]
+2. [Frontend] → API Request + Bearer Token → [Kong Gateway]  
+3. [Kong OIDC Plugin] → Validates Token with Keycloak → [Routes to Service]
+4. [Microservice] → Trusts Kong validation → [Returns Response]
+```
+
+### **📊 Phase 2B Benefits**
+| Feature | Phase 2A (Current) | Phase 2B (Kong + Keycloak) |
+|---------|-------------------|---------------------------|
+| **Authentication** | Simple JWT | Enterprise OIDC/OAuth2 |
+| **Authorization** | Basic roles | RBAC/ABAC with policies |
+| **API Management** | Custom gateway | Kong enterprise features |
+| **User Management** | Database users | Keycloak admin console |
+| **SSO Support** | No | Yes (Google, GitHub, LDAP) |
+| **Audit Logging** | Basic | Comprehensive compliance |
+| **Monitoring** | Custom metrics | Kong + Prometheus + Grafana |
+| **Rate Limiting** | Per IP | Per user/role/API key |
+| **Security Headers** | Basic | Kong security plugins |
+
+### **🗄️ Enhanced Database Schema (Phase 2B)**
+```sql
+-- Enhanced user management with Keycloak integration
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    keycloak_id VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    role VARCHAR(50) DEFAULT 'user',
+    organization_id UUID,
+    created_at TIMESTAMP DEFAULT NOW(),
+    last_login TIMESTAMP
+);
+
+-- API usage tracking for Kong integration
+CREATE TABLE api_usage (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    service_name VARCHAR(100),
+    endpoint VARCHAR(200),
+    method VARCHAR(10),
+    status_code INTEGER,
+    response_time_ms INTEGER,
+    timestamp TIMESTAMP DEFAULT NOW()
+);
+```
 
 ## 🔧 **Technical Specifications**
 
@@ -353,13 +498,28 @@ CREATE TABLE image_jobs (
 4. **📝 Create Text Service** - Python + NLP + Transformers
 5. **🗄️ Database Integration** - PostgreSQL + Redis caching
 
-### **Priority Recommendation:**
-**Start with Trading Analysis Service** - High impact, clear business value, and leverages Go's performance advantages for real-time financial data.
+### **🎯 Development Strategy Recommendation:**
 
-**Would you like me to:**
-1. **🚀 Begin Phase 2 with Trading Analysis Service** (recommended)
-2. **🏗️ Setup the complete Phase 2 architecture** 
-3. **📊 Focus on optimizing Phase 1 performance first**
-4. **🔧 Add specific features to existing Code Generation service**
+#### **Immediate Next Steps (Choose One):**
+1. **🚀 Phase 2A: Add AI Services First** (Business Value Focus)
+   - Start with Trading Analysis Service for immediate ROI
+   - Keep current simple architecture for rapid development
+   - Add Image/Text processing services
+   
+2. **🏛️ Phase 2B: Enterprise Security First** (Enterprise Focus)  
+   - Implement Kong + Keycloak immediately
+   - Build enterprise-grade foundation
+   - Then add AI services on solid security base
 
-What's your preference for Phase 2 development?
+3. **⚡ Hybrid Approach** (Recommended)
+   - **Weeks 5-8**: Add 1-2 AI services with current architecture
+   - **Weeks 9-12**: Migrate to Kong + Keycloak enterprise setup
+   - **Phase 3**: Scale with remaining AI services
+
+#### **Why Hybrid Approach is Recommended:**
+✅ **Prove business value** with AI services first  
+✅ **Migrate to enterprise security** when architecture is stable  
+✅ **Minimize risk** by avoiding big-bang changes  
+✅ **Learn from service patterns** before enterprise commitment
+
+**What's your preference for Phase 2 development?**
