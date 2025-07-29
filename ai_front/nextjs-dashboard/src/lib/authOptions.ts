@@ -1,5 +1,7 @@
 import { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import AzureADProvider from 'next-auth/providers/azure-ad'
+import AppleProvider from 'next-auth/providers/apple'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { verifyUser } from '@/data/userStore'
 
@@ -8,6 +10,14 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
+    AzureADProvider({
+      clientId: process.env.MICROSOFT_CLIENT_ID || '',
+      clientSecret: process.env.MICROSOFT_CLIENT_SECRET || '',
+    }),
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID || '',
+      clientSecret: process.env.APPLE_CLIENT_SECRET || '',
     }),
     CredentialsProvider({
       name: 'Credentials',
