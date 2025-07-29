@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import {
+  FiDownload, FiEye, FiCheck, FiClock, FiAlertCircle, FiPlus, FiTrash2, FiStar,
+  FiZap, FiBrain, FiTarget, FiTrendingUp, FiFileText, FiSettings, FiMagic,
+  FiBarChart, FiRefreshCw, FiLightbulb, FiSearch, FiUpload, FiCopy
+} from 'react-icons/fi';
 
 interface ResumeJob {
   job_id: string;
@@ -109,7 +114,7 @@ export default function ResumeDemoPage() {
           }
         })
       });
-      
+
       const data = await response.json();
       setResumeJob(data);
       
