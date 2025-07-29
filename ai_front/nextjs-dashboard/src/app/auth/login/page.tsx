@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi";
 import GoogleAuth from "@/components/GoogleAuth";
+import MicrosoftAuth from "@/components/MicrosoftAuth";
+import AppleAuth from "@/components/AppleAuth";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,21 +22,18 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful login
-      const mockUser = {
-        id: "demo_user",
-        name: "Demo User",
-        email: email,
-        credits: 5.69
-      };
-      
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      router.push('/');
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      })
+      if (result?.error) {
+        setError('Invalid email or password')
+      } else {
+        router.push('/dashboard')
+      }
     } catch (err) {
-      setError("Invalid email or password");
+      setError('Login failed')
     } finally {
       setIsLoading(false);
     }
@@ -109,9 +109,11 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Google Sign In */}
-          <div className="mb-6">
+          {/* OAuth Sign In */}
+          <div className="mb-6 space-y-3">
             <GoogleAuth buttonText="Sign in with Google" />
+            <MicrosoftAuth buttonText="Sign in with Microsoft" />
+            <AppleAuth buttonText="Sign in with Apple" />
           </div>
 
           {/* Divider */}

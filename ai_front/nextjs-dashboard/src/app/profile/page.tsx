@@ -50,10 +50,13 @@ export default function ProfilePage() {
     setIsUpdating(true);
     
     try {
-      // TODO: Call API to update profile
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email, data: profileData }),
+      })
       updateUser(profileData);
-      alert("Profile updated successfully!");
+      alert('Profile updated successfully!');
     } catch (error) {
       console.error("Failed to update profile:", error);
       alert("Failed to update profile. Please try again.");
@@ -67,10 +70,13 @@ export default function ProfilePage() {
     setIsUpdating(true);
     
     try {
-      // TODO: Call API to update preferences
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email, data: { preferences } }),
+      })
       updateUser({ preferences });
-      alert("Preferences updated successfully!");
+      alert('Preferences updated successfully!');
     } catch (error) {
       console.error("Failed to update preferences:", error);
       alert("Failed to update preferences. Please try again.");
@@ -90,10 +96,13 @@ export default function ProfilePage() {
     setIsUpdating(true);
     
     try {
-      // TODO: Call API to update password
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
-      alert("Password updated successfully!");
+      await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email, data: { password: passwordData.newPassword } }),
+      })
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      alert('Password updated successfully!');
     } catch (error) {
       console.error("Failed to update password:", error);
       alert("Failed to update password. Please try again.");

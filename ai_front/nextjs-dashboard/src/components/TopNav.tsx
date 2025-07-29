@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { FiUser, FiSettings, FiLogOut, FiBell, FiChevronDown } from "react-icons/fi";
 import { useState, useRef, useEffect } from "react";
+import { useSession, signOut } from 'next-auth/react';
 
 export default function TopNav() {
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
+  const { data: session } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +27,7 @@ export default function TopNav() {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push("/");
+      await signOut({ callbackUrl: '/' });
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -37,7 +39,7 @@ export default function TopNav() {
       <div className="flex items-center space-x-4">
         {isAuthenticated && (
           <div className="text-sm text-gray-600">
-            Welcome back, <span className="font-medium text-gray-900">{user?.name}</span>
+            Welcome back, <span className="font-medium text-gray-900">{session?.user?.name || user?.name}</span>
           </div>
         )}
       </div>
@@ -70,7 +72,7 @@ export default function TopNav() {
                 className="flex items-center space-x-2 p-2 text-gray-700 hover:text-gray-900 transition-colors"
               >
                 <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                  {user?.name?.[0]?.toUpperCase() || "U"}
+                  {(session?.user?.name || user?.name || 'U')[0].toUpperCase()}
                 </div>
                 <FiChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? "rotate-180" : ""}`} />
               </button>
@@ -78,8 +80,8 @@ export default function TopNav() {
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
                   <div className="px-4 py-2 border-b border-gray-100">
-                    <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
+                    <p className="text-sm font-medium text-gray-900">{session?.user?.name || user?.name}</p>
+                    <p className="text-xs text-gray-500">{session?.user?.email || user?.email}</p>
                   </div>
                   
                   <Link
