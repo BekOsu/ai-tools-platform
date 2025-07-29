@@ -3,6 +3,7 @@ export interface UserRecord {
   name: string;
   email: string;
   password: string;
+  credits: number;
 }
 
 const users: UserRecord[] = [];
@@ -12,7 +13,7 @@ export function createUser(name: string, email: string, password: string): UserR
   if (existing) {
     throw new Error('User already exists');
   }
-  const user: UserRecord = { id: Date.now().toString(), name, email, password };
+  const user: UserRecord = { id: Date.now().toString(), name, email, password, credits: 15.69 };
   users.push(user);
   return user;
 }
@@ -32,4 +33,9 @@ export function updateUser(email: string, data: Partial<UserRecord>) {
     Object.assign(user, data)
   }
   return user
+}
+
+export function getUserCredits(email: string): number | null {
+  const user = users.find(u => u.email === email)
+  return user ? user.credits : null
 }
