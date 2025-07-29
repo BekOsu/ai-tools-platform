@@ -92,6 +92,14 @@ ai-project/
    - 🌐 **Dashboard**: http://localhost:3000
    - 💻 **Code Playground**: http://localhost:3000/playground
    - 🔍 **API Health**: http://localhost:8002/health
+   - 🧪 **AI Services Demo**: http://localhost:3000/demo
+
+### **Authentication with Google OAuth**
+
+1. Create a Google OAuth client ID and secret
+2. Copy `.env.example` to `.env` and fill in `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `NEXTAUTH_SECRET`
+3. Start the app and click "Continue with Google" on the login page
+4. Successful sign in will create a session managed by NextAuth
 
 ### **🐳 Docker Deployment**
 ```bash

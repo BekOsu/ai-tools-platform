@@ -4,6 +4,7 @@ import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,8 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-white text-gray-900">
         <ErrorBoundary>
-          <AuthProvider>
-            <div className="flex h-screen">
+          <SessionProvider>
+            <AuthProvider>
+              <div className="flex h-screen">
               {/* Sidebar */}
               <Sidebar />
 
@@ -32,7 +34,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Footer />
               </div>
             </div>
-          </AuthProvider>
+            </AuthProvider>
+          </SessionProvider>
         </ErrorBoundary>
       </body>
     </html>
