@@ -3,6 +3,8 @@ import { useAuth } from "@/contexts/AuthContext";
 // import { useAIFeatures } from "@/hooks/useApi";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { FiTrendingUp, FiUsers, FiStar, FiActivity, FiClock, FiHeart, FiCode, FiImage } from "react-icons/fi";
+import UsageAnalytics from "@/components/UsageAnalytics";
+import BillingSummary from "@/components/BillingSummary";
 
 export default function DashboardPage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -242,6 +244,12 @@ export default function DashboardPage() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Usage Analytics & Billing */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <UsageAnalytics />
+        <BillingSummary />
       </div>
 
       {/* Browse All Tools CTA - GCP Style */}
