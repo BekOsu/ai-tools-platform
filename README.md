@@ -1,247 +1,291 @@
-# 🤖 AI Tools Platform - Comprehensive AI-Powered Development Suite
+# 🚀 AI Tools Platform - Monorepo
 
-A production-ready AI platform featuring code generation, trading analysis, image processing, and more, powered by Claude Code SDK and modern microservices architecture.
+A comprehensive AI-powered tools platform featuring microservices architecture, built with Next.js, Python, Go, and TypeScript.
 
-## 🎯 **Project Status: Phase 1 Complete ✅**
+## 🎯 **Project Status: Monorepo Architecture Complete ✅**
 
 ### **🚀 Currently Implemented (Phase 1)**
+- ✅ **Monorepo Structure**: Unified repository with apps, services, and packages
 - ✅ **Frontend**: Complete Next.js 15 + React 19 + TypeScript application
-- ✅ **AI Code Playground**: Monaco Editor with Claude Code SDK integration  
-- ✅ **Backend Microservice**: Production-ready Node.js + Express + TypeScript API
-- ✅ **Claude SDK Integration**: Full file write permissions and code generation
-- ✅ **Docker Setup**: Complete containerization with health checks
-- ✅ **Authentication**: JWT-based auth system with login/signup
-- ✅ **Production Architecture**: Security, logging, monitoring, error handling
+- ✅ **Backend API**: Django-based API with comprehensive features
+- ✅ **Trading Analysis Service**: Go-based high-performance trading platform
+- ✅ **Resume Builder Service**: TypeScript service with AI-powered features
+- ✅ **Code Generation Service**: Multi-language code generation with LLM integration
+- ✅ **Image/Text/Audio Services**: Python-based AI processing services
+- ✅ **Docker Compose**: Complete containerization with orchestration
+- ✅ **Shared Types**: TypeScript types package for consistency
+- ✅ **CI/CD Pipeline**: GitHub Actions workflow for automated testing and deployment
 
 ### **📡 Live Services**
-- **Frontend Dashboard**: http://localhost:3000
-- **AI Code Playground**: http://localhost:3000/playground  
-- **Code Generation API**: http://localhost:8002
-- **Health Monitoring**: http://localhost:8002/health
+- **Frontend Web App**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **Trading Service**: http://localhost:8001
+- **Resume Service**: http://localhost:8002
+- **Code Generation**: http://localhost:8003
+- **Image Processing**: http://localhost:8004
+- **Text Analysis**: http://localhost:8005
+- **Audio Synthesis**: http://localhost:8006
 
 ## 🏗️ **Architecture Overview**
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │  Code Gen       │    │  Claude Code    │
-│   (Next.js)     │────│  Service        │────│  SDK            │
-│   Port 3000     │    │  (Node.js)      │    │  (File Write)   │
-└─────────────────┘    │  Port 8002      │    └─────────────────┘
-                       └─────────────────┘
+│   Frontend      │    │  Backend API    │    │  Microservices  │
+│   (Next.js)     │────│  (Django)       │────│  (Go/TS/Python) │
+│   Port 3000     │    │  Port 8000      │    │  Ports 8001-8006│
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                               │
+                    ┌─────────────────┐
+                    │   Infrastructure │
+                    │ PostgreSQL+Redis │
+                    │   Nginx Proxy   │
+                    └─────────────────┘
 ```
 
-### **🔧 Tech Stack Implemented**
-- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS, Monaco Editor
-- **Backend**: Node.js, Express, TypeScript, Winston (logging)
-- **AI Integration**: Claude Code SDK with file write permissions
-- **Security**: Helmet, CORS, rate limiting, input validation
-- **Deployment**: Docker, health checks, graceful shutdown
-- **Database**: Ready for PostgreSQL/Redis integration
-
-## 📁 **Project Structure**
+## 📁 Repository Structure
 
 ```
-ai-project/
-├── ai_front/nextjs-dashboard/           # 🎨 Frontend Application
-│   ├── src/app/playground/              # 🚀 AI Code Playground
-│   ├── src/components/                  # 🧩 React Components
-│   ├── src/lib/                         # 📚 Utilities & APIs
-│   ├── services/codegen-service/        # 🤖 Node.js Microservice
-│   │   ├── src/                         # 📝 TypeScript Source
-│   │   ├── dist/                        # 🔨 Compiled JavaScript
-│   │   ├── node_modules/                # 📦 Dependencies (Claude SDK)
-│   │   ├── Dockerfile                   # 🐳 Container Config
-│   │   └── README.md                    # 📖 Service Documentation
-│   ├── IMPROVEMENTS.md                  # 📈 Progress Log
-│   └── MICROSERVICES_ARCHITECTURE.md   # 🏗️ Architecture Docs
-├── BACKEND_ARCHITECTURE_PLAN.md         # 📋 Development Roadmap
-└── README.md                            # 📘 This File
+ai-tools-platform/
+├── apps/                    # Applications
+│   ├── web/                # Next.js frontend (Port: 3000)
+│   └── api/                # Django backend API (Port: 8000)
+├── services/               # Microservices
+│   ├── trading/            # Go trading analysis service (Port: 8001)
+│   ├── resume-builder/     # TypeScript resume service (Port: 8002)
+│   ├── code-generation/    # TypeScript code gen service (Port: 8003)
+│   ├── image-processing/   # Python image service (Port: 8004)
+│   ├── text-analysis/      # Python NLP service (Port: 8005)
+│   └── audio-synthesis/    # Python audio service (Port: 8006)
+├── packages/               # Shared libraries
+│   ├── shared-types/       # Shared TypeScript types
+│   ├── ui-components/      # Shared React components
+│   └── api-client/         # API client library
+├── tools/                  # Development tools
+│   ├── docker/             # Docker configurations
+│   ├── scripts/            # Build and deployment scripts
+│   └── configs/            # Shared configurations
+├── docs/                   # Documentation
+│   ├── api/                # API documentation
+│   ├── services/           # Service-specific docs
+│   └── deployment/         # Deployment guides
+├── docker-compose.yml      # Local development setup
+├── package.json           # Root package.json
+└── README.md              # This file
 ```
 
-## 🚀 **Quick Start**
+### **🔧 Tech Stack**
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend API**: Django, Python, PostgreSQL, Redis
+- **Trading Service**: Go, WebSocket, Technical Analysis
+- **Node.js Services**: TypeScript, Express, AI/LLM integration
+- **Python Services**: FastAPI, Computer Vision, NLP, Audio Processing
+- **Infrastructure**: Docker, Nginx, PostgreSQL, Redis
+- **CI/CD**: GitHub Actions, Automated Testing, Security Scanning
 
-### **Prerequisites**
-- Node.js 20+
-- npm or pnpm
-- Docker (optional)
+## 🚀 Quick Start
 
-### **🏃‍♂️ Running the Platform**
+### Prerequisites
+- Node.js 18+
+- Python 3.11+
+- Go 1.21+
+- Docker & Docker Compose
+- PostgreSQL
+- Redis
 
-1. **Clone and Setup**
-   ```bash
-   cd ai-project/ai_front/nextjs-dashboard
-   npm install
-   ```
-
-2. **Start Code Generation Service**
-   ```bash
-   cd services/codegen-service
-   npm install
-   npm run dev  # Development mode
-   # or
-   npm run build && npm start  # Production mode
-   ```
-
-3. **Start Frontend Dashboard**
-   ```bash
-   cd ai-project/ai_front/nextjs-dashboard
-   npm run dev
-   ```
-
-4. **Access Applications**
-   - 🌐 **Dashboard**: http://localhost:3000
-   - 💻 **Code Playground**: http://localhost:3000/playground
-   - 🔍 **API Health**: http://localhost:8002/health
-   - 🧪 **AI Services Demo**: http://localhost:3000/demo
-
-### **Authentication with OAuth Providers**
-
-1. Create OAuth credentials for Google, Microsoft (Azure AD), and Apple
-2. Copy `.env.example` to `.env` and fill in `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `APPLE_CLIENT_ID`, `APPLE_CLIENT_SECRET`, and `NEXTAUTH_SECRET`
-3. Start the app and sign in with your provider of choice or with email credentials
-4. For email sign up, create an account on the signup page. Sessions are managed by NextAuth
-5. The dashboard automatically loads your current credit balance and product list from the backend API
-
-### **🐳 Docker Deployment**
+### 1. Clone the Repository
 ```bash
-cd services/codegen-service
-docker build -t ai-codegen-service .
-docker run -p 8002:8002 -e ANTHROPIC_API_KEY=your_key ai-codegen-service
+git clone https://github.com/BekOsu/ai-tools-platform.git
+cd ai-tools-platform
 ```
 
-## 🎯 **Key Features Implemented**
+### 2. Environment Setup
+```bash
+# Copy environment variables
+cp .env.example .env
 
-### **🤖 AI Code Playground**
-- **Multi-language Support**: TypeScript, JavaScript, Python, Go, Rust, Java, C++
-- **Real-time Generation**: Powered by Claude Code SDK
-- **File Creation**: Multi-file project generation with proper permissions
-- **Monaco Editor**: Full IDE experience with syntax highlighting
-- **Templates**: Pre-built patterns for React components, APIs, database models
-- **Export Options**: Download generated code with proper file extensions
+# Install root dependencies
+npm install
 
-### **🔒 Production Security**
-- **Helmet.js**: Security headers protection
-- **CORS**: Cross-origin request handling
-- **Rate Limiting**: 100 requests per 15 minutes per IP
-- **Input Validation**: Express-validator for request sanitization
-- **Error Handling**: Comprehensive error boundaries and logging
-
-### **📊 Monitoring & Observability**
-- **Health Checks**: `/health`, `/health/ready`, `/health/live`
-- **Structured Logging**: Winston with JSON format
-- **Performance Metrics**: Request timing and error tracking
-- **Docker Health Checks**: Container monitoring ready
-
-## 📡 **API Endpoints**
-
-### **Code Generation Service (Port 8002)**
-```http
-POST /api/generate/code
-POST /api/generate/improve
-POST /api/generate/explain
-GET  /api/generate/templates
-GET  /api/generate/languages
-GET  /health
-GET  /health/ready
-GET  /health/live
+# Setup all applications and services
+npm run setup
 ```
 
-### **Frontend API (Port 3000)**
-```http
-POST /api/code-generation/generate  # Proxies to microservice
-GET  /playground                    # Code playground UI
-GET  /dashboard                     # Main dashboard
-GET  /login                         # Authentication
+### 3. Start with Docker Compose (Recommended)
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
 ```
 
-## 🔑 **Claude Code SDK Integration**
+### 4. Development Mode (Individual Services)
+```bash
+# Start frontend
+npm run dev:web
 
-### **File Write Permissions Configured**
-```typescript
-// ✅ Implemented: Full file write permissions
-allowedTools: ["Read", "Write", "Bash", "Edit", "MultiEdit"]
-permissionMode: "acceptEdits"
+# Start backend API
+npm run dev:api
 
-// ✅ Features Available:
-// - Multi-file project generation
-// - Directory structure creation
-// - File modification and editing
-// - Code execution capabilities
+# Start all services
+npm run dev:services
+
+# Or start individual services
+npm run service:trading
+npm run service:resume
+npm run service:codegen
 ```
 
-## 📈 **What's Next: Phase 2 Roadmap**
+## 🧪 Testing
 
-### **🎯 Immediate Next Steps**
-1. **Add API Key Configuration** - Environment setup for Claude SDK
-2. **Enhanced Code Templates** - More programming patterns and frameworks
-3. **Real-time Collaboration** - WebSocket integration for live coding
-4. **Code Execution** - Safe sandbox environment for running generated code
-5. **Version Control** - Git integration for code history
+### Run All Tests
+```bash
+npm test
+```
 
-### **🚀 Phase 2: Additional AI Services**
-1. **Trading Analysis Service** (Go/Python)
-2. **Image Processing Service** (Python + OpenCV)
-3. **Text Analysis Service** (Python + NLP)
-4. **Audio Synthesis Service** (Python + PyTorch)
-5. **Resume Builder Service** (Node.js + PDF generation)
+### Individual Test Suites
+```bash
+# Frontend tests
+npm run test:web
 
-### **🏗️ Phase 3: Production Scaling**
-1. **Database Integration** (PostgreSQL + Redis)
-2. **Message Queue System** (RabbitMQ/Redis)
-3. **Load Balancing** (Nginx + Docker Swarm)
-4. **Monitoring Stack** (Prometheus + Grafana)
-5. **CI/CD Pipeline** (GitHub Actions + Docker)
+# Backend tests
+npm run test:api
 
-## 🛠️ **Development Guidelines**
+# Go service tests
+cd services/trading && go test -v ./...
 
-### **Adding New AI Services**
-1. Create service in `services/` directory
-2. Follow existing patterns for logging, validation, health checks
-3. Add Docker configuration
-4. Update API gateway routing
-5. Add frontend integration
+# Python service tests
+cd services/image-processing && python -m pytest
+```
 
-### **Code Quality Standards**
-- ✅ TypeScript strict mode
-- ✅ ESLint + Prettier formatting
-- ✅ Comprehensive error handling
-- ✅ Unit tests (Jest framework ready)
-- ✅ Docker health checks
-- ✅ API documentation
+## 🔧 Development Workflow
 
-## 📚 **Documentation**
+### Adding a New Service
+1. Create service directory in `services/`
+2. Add service configuration to `docker-compose.yml`
+3. Update `package.json` scripts
+4. Add service routes to Nginx configuration
+5. Update shared types if needed
 
-- **[Backend Architecture Plan](BACKEND_ARCHITECTURE_PLAN.md)** - Detailed development roadmap
-- **[Service Documentation](ai_front/nextjs-dashboard/services/codegen-service/README.md)** - Code generation API docs
-- **[Frontend Architecture](ai_front/nextjs-dashboard/MICROSERVICES_ARCHITECTURE.md)** - UI and component structure
-- **[Improvements Log](ai_front/nextjs-dashboard/IMPROVEMENTS.md)** - Change history and optimizations
+### Working with Shared Packages
+```bash
+# Build shared types
+cd packages/shared-types
+npm run build
 
-## 🤝 **Contributing**
+# Use in other services
+npm install @ai-tools/shared-types
+```
+
+## 📊 Monitoring & Health Checks
+
+### Service Health Endpoints
+- Web App: http://localhost:3000/health
+- API: http://localhost:8000/health
+- Trading: http://localhost:8001/health
+- Resume: http://localhost:8002/health
+- Codegen: http://localhost:8003/health
+- Image: http://localhost:8004/health
+- Text: http://localhost:8005/health
+- Audio: http://localhost:8006/health
+
+### Database Monitoring
+- PostgreSQL: localhost:5432
+- Redis: localhost:6379
+
+## 🚢 Deployment
+
+### Production Deployment
+```bash
+# Build all services
+npm run build
+
+# Deploy with Docker
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### CI/CD Pipeline
+The repository includes GitHub Actions workflows for:
+- Automated testing
+- Security scanning
+- Docker image building
+- Staging deployment
+- Production deployment
+
+## 📚 API Documentation
+
+### Core API Endpoints
+- **Authentication**: `/api/auth/`
+- **User Management**: `/api/user/`
+- **Trading**: `/services/trading/`
+- **Resume Builder**: `/services/resume/`
+- **Code Generation**: `/services/codegen/`
+- **Image Processing**: `/services/image/`
+- **Text Analysis**: `/services/text/`
+- **Audio Synthesis**: `/services/audio/`
+
+### WebSocket Endpoints
+- **Trading Data**: `ws://localhost:8001/ws/trading`
+- **Real-time Notifications**: `ws://localhost:3000/ws/notifications`
+
+## 🔐 Security
+
+### Environment Variables
+Sensitive configuration is managed through environment variables:
+- API keys for external services
+- Database credentials
+- JWT secrets
+- Service endpoints
+
+### Security Features
+- JWT-based authentication
+- Rate limiting
+- CORS protection
+- Input validation
+- SQL injection prevention
+- XSS protection
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Follow existing code patterns and standards
-4. Add tests for new functionality
-5. Update documentation
-6. Submit pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-## 📄 **License**
+### Development Guidelines
+- Use TypeScript for new Node.js services
+- Follow existing code style and patterns
+- Add tests for new functionality
+- Update documentation
+- Ensure Docker builds succeed
 
-MIT License - see LICENSE file for details
+## 📄 License
 
-## 🎊 **Achievements**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- 🚀 **Complete AI Code Playground** with Claude Code SDK
-- 🏗️ **Production-ready microservices** architecture
-- 🔒 **Enterprise-grade security** and monitoring
-- 🐳 **Full Docker containerization** with health checks
-- 📱 **Modern responsive frontend** with Next.js 15
-- ⚡ **High-performance APIs** with proper validation
-- 📚 **Comprehensive documentation** and guides
-- 📊 **Usage analytics and billing endpoints** available at `/api/analytics/usage` and `/api/billing/summary`
+## 📞 Support
+
+For support and questions:
+- Create an issue on GitHub
+- Check the documentation in `/docs`
+- Review existing issues and discussions
+
+## 🔄 Recent Updates
+
+### v1.0.0 - Monorepo Consolidation
+- ✅ Consolidated 3 separate repositories into unified monorepo
+- ✅ Implemented comprehensive microservices architecture
+- ✅ Added Docker Compose development environment
+- ✅ Created shared TypeScript types package
+- ✅ Established unified CI/CD pipeline
+- ✅ Enhanced trading analysis service with Go implementation
+- ✅ Added WebSocket support for real-time data streaming
+- ✅ Implemented advanced technical indicators and trading algorithms
 
 ---
 
-**Built with ❤️ using Claude Code SDK, Next.js, Node.js, and TypeScript**
-
-🤖 *Generated and enhanced with [Claude Code](https://claude.ai/code)*
+**Built with ❤️ by Abu Baker**

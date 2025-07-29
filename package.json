@@ -1,0 +1,63 @@
+{
+  "name": "ai-tools-platform",
+  "version": "1.0.0",
+  "description": "AI Tools Platform - Comprehensive Monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\" \"npm run dev:services\"",
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:api": "cd apps/api && python manage.py runserver",
+    "dev:services": "docker-compose up -d",
+    "build": "npm run build:web && npm run build:services",
+    "build:web": "cd apps/web && npm run build",
+    "build:services": "docker-compose build",
+    "test": "npm run test:web && npm run test:api",
+    "test:web": "cd apps/web && npm test",
+    "test:api": "cd apps/api && python manage.py test",
+    "lint": "npm run lint:web && npm run lint:services",
+    "lint:web": "cd apps/web && npm run lint",
+    "lint:services": "cd services && find . -name '*.ts' -o -name '*.js' | xargs eslint",
+    "clean": "rm -rf node_modules apps/*/node_modules services/*/node_modules packages/*/node_modules",
+    "setup": "npm install && cd apps/web && npm install && cd ../api && pip install -r requirements.txt",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "services:start": "concurrently \"npm run service:trading\" \"npm run service:resume\" \"npm run service:codegen\"",
+    "service:trading": "cd services/trading && go run main.go",
+    "service:resume": "cd services/resume-builder && npm start",
+    "service:codegen": "cd services/code-generation && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BekOsu/ai-tools-platform.git"
+  },
+  "keywords": [
+    "ai",
+    "tools",
+    "platform",
+    "microservices",
+    "monorepo",
+    "nextjs",
+    "python",
+    "golang",
+    "typescript"
+  ],
+  "author": "Abu Baker",
+  "license": "MIT"
+}

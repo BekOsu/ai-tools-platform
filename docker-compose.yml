@@ -1,0 +1,179 @@
+version: '3.8'
+
+services:
+  # Frontend Web Application
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+    depends_on:
+      - api
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Backend API (Django)
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/ai_tools_db
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      - db
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Trading Analysis Service (Go)
+  trading-service:
+    build:
+      context: ./services/trading
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - REDIS_URL=redis://redis:6379/1
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/trading_db
+    depends_on:
+      - db
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Resume Builder Service (Node.js)
+  resume-service:
+    build:
+      context: ./services/resume-builder
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - PORT=8002
+      - REDIS_URL=redis://redis:6379/2
+    depends_on:
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Code Generation Service (Node.js)
+  codegen-service:
+    build:
+      context: ./services/code-generation
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      - PORT=8003
+      - REDIS_URL=redis://redis:6379/3
+    depends_on:
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Image Processing Service (Python)
+  image-service:
+    build:
+      context: ./services/image-processing
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"
+    environment:
+      - PORT=8004
+      - REDIS_URL=redis://redis:6379/4
+    depends_on:
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Text Analysis Service (Python)
+  text-service:
+    build:
+      context: ./services/text-analysis
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    environment:
+      - PORT=8005
+      - REDIS_URL=redis://redis:6379/5
+    depends_on:
+      - redis
+    networks:
+      - ai-tools-network
+
+  # Audio Synthesis Service (Python)
+  audio-service:
+    build:
+      context: ./services/audio-synthesis
+      dockerfile: Dockerfile
+    ports:
+      - "8006:8006"
+    environment:
+      - PORT=8006
+      - REDIS_URL=redis://redis:6379/6
+    depends_on:
+      - redis
+    networks:
+      - ai-tools-network
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ai_tools_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./tools/docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - ai-tools-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ai-tools-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./tools/docker/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+      - api
+    networks:
+      - ai-tools-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  ai-tools-network:
+    driver: bridge
