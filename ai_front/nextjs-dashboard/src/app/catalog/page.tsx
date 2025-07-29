@@ -21,6 +21,26 @@ export default function CatalogPage() {
   const [viewType, setViewType] = useState<ViewType>("grid");
   const [showFilters, setShowFilters] = useState(false);
 
+  // Get demo link for our custom microservices
+  const getDemoLink = (tool: EdenAITool): string | null => {
+    switch (tool.id) {
+      case "trading-analysis":
+        return "/demo/trading";
+      case "image-processing-ai":
+        return "/demo/image";
+      case "text-analysis-nlp":
+        return "/demo/text";
+      case "audio-synthesis-ai":
+        return "/demo/audio";
+      case "resume-builder-ai":
+        return "/demo/resume";
+      case "code-generation-claude":
+        return "/demo/code";
+      default:
+        return null; // External APIs - show generic "Try Now"
+    }
+  };
+
   // Filter and sort tools
   const filteredTools = useMemo(() => {
     let filtered = edenAITools;
@@ -144,9 +164,19 @@ export default function CatalogPage() {
                 >
                   Details
                 </Link>
-                <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
-                  Try Now
-                </button>
+{/* Dynamic Try Now button based on tool type */}
+                {getDemoLink(tool) ? (
+                  <Link
+                    href={getDemoLink(tool)!}
+                    className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Try Demo
+                  </Link>
+                ) : (
+                  <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
+                    Try Now
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -207,9 +237,19 @@ export default function CatalogPage() {
             >
               Details
             </Link>
-            <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
-              Try Now
-            </button>
+{/* Dynamic Try Now button based on tool type */}
+            {getDemoLink(tool) ? (
+              <Link
+                href={getDemoLink(tool)!}
+                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Try Demo
+              </Link>
+            ) : (
+              <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
+                Try Now
+              </button>
+            )}
           </div>
         </div>
       </div>

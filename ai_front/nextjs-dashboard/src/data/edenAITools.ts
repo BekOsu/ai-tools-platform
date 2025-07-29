@@ -24,6 +24,137 @@ export interface EdenAITool {
 }
 
 export const edenAITools: EdenAITool[] = [
+  // ===== OUR CUSTOM AI MICROSERVICES =====
+  {
+    id: "trading-analysis",
+    name: "Trading Analysis Service",
+    description: "Real-time market data analysis with technical indicators, portfolio tracking, and WebSocket price feeds",
+    category: "Trading",
+    subcategory: "Analysis",
+    icon: "FiTrendingUp",
+    iconColor: "text-green-600",
+    provider: "Custom (Go)",
+    pricing: "free",
+    accuracy: 98,
+    speed: "fast",
+    features: ["Real-time WebSocket feeds", "Technical indicators (RSI, MACD, Bollinger)", "Portfolio tracking", "Risk assessment", "Trading signals"],
+    useCases: ["Algorithmic trading", "Portfolio management", "Market analysis", "Risk assessment"],
+    inputTypes: ["Symbol", "JSON"],
+    outputTypes: ["JSON", "WebSocket"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/trading",
+    isAsync: false
+  },
+  {
+    id: "image-processing-ai",
+    name: "AI Image Processing",
+    description: "Advanced computer vision with face detection, image effects, color analysis, and batch processing",
+    category: "Image",
+    subcategory: "Processing",
+    icon: "FiCamera",
+    iconColor: "text-blue-500",
+    provider: "Custom (Python + OpenCV)",
+    pricing: "free",
+    accuracy: 95,
+    speed: "medium",
+    features: ["Face detection", "Image enhancement", "Color analysis", "Object detection", "Batch processing", "Multiple formats"],
+    useCases: ["Photo editing", "Content moderation", "Computer vision", "Image analysis"],
+    inputTypes: ["JPG", "PNG", "WebP", "TIFF"],
+    outputTypes: ["Image", "JSON"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/image",
+    isAsync: true
+  },
+  {
+    id: "text-analysis-nlp",
+    name: "Advanced Text Analysis",
+    description: "Comprehensive NLP with sentiment analysis, entity recognition, keyword extraction, and text summarization",
+    category: "Text",
+    subcategory: "NLP",
+    icon: "FiType",
+    iconColor: "text-purple-500",
+    provider: "Custom (Python + spaCy)",
+    pricing: "free",
+    accuracy: 96,
+    speed: "fast",
+    features: ["Sentiment analysis", "Named entity recognition", "Keyword extraction", "Text summarization", "Language detection", "Text similarity"],
+    useCases: ["Content analysis", "Social media monitoring", "Document processing", "SEO optimization"],
+    inputTypes: ["Text"],
+    outputTypes: ["JSON"],
+    languages: ["English", "Spanish", "French", "German", "Chinese"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/text",
+    isAsync: true
+  },
+  {
+    id: "audio-synthesis-ai",
+    name: "AI Audio Synthesis",
+    description: "Text-to-speech, music generation, voice cloning, and comprehensive audio processing with PyTorch",
+    category: "Audio",
+    subcategory: "Synthesis",
+    icon: "FiHeadphones",
+    iconColor: "text-orange-500",
+    provider: "Custom (Python + PyTorch)",
+    pricing: "free",
+    accuracy: 92,
+    speed: "slow",
+    features: ["Text-to-speech", "Music generation", "Voice cloning", "Audio effects", "Speech analysis", "Mood detection"],
+    useCases: ["Voice assistants", "Music creation", "Podcast production", "Audio branding"],
+    inputTypes: ["Text", "Audio"],
+    outputTypes: ["MP3", "WAV", "JSON"],
+    languages: ["English", "Spanish", "French", "German"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/audio",
+    isAsync: true
+  },
+  {
+    id: "resume-builder-ai",
+    name: "AI Resume Builder",
+    description: "Professional resume generation with multiple templates, AI optimization, and ATS compatibility scoring",
+    category: "Document",
+    subcategory: "Resume",
+    icon: "FiUser",
+    iconColor: "text-indigo-500",
+    provider: "Custom (Node.js + Puppeteer)",
+    pricing: "free",
+    accuracy: 94,
+    speed: "fast",
+    features: ["Multiple templates", "AI optimization", "ATS scoring", "PDF generation", "Batch processing", "Custom themes"],
+    useCases: ["Job applications", "Career development", "HR automation", "Professional branding"],
+    inputTypes: ["JSON", "Text"],
+    outputTypes: ["PDF", "HTML"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/resume",
+    isAsync: true
+  },
+  {
+    id: "code-generation-claude",
+    name: "AI Code Generation",
+    description: "Multi-language code generation, review, and optimization powered by Claude AI with advanced context understanding",
+    category: "Text",
+    subcategory: "Code",
+    icon: "FiCode",
+    iconColor: "text-green-400",
+    provider: "Custom (Node.js + Claude)",
+    pricing: "free",
+    accuracy: 97,
+    speed: "fast",
+    features: ["Multi-language support", "Code review", "Documentation generation", "Refactoring", "Bug fixing", "Context-aware generation"],
+    useCases: ["Software development", "Code assistance", "Learning", "Code review", "Documentation"],
+    inputTypes: ["Text"],
+    outputTypes: ["Code", "JSON"],
+    languages: ["Python", "JavaScript", "TypeScript", "Java", "C++", "Go", "Rust", "PHP"],
+    isPopular: true,
+    isNew: true,
+    apiEndpoint: "/api/code",
+    isAsync: false
+  },
+
   // ===== CUSTOM CHATBOT & RAG =====
   {
     id: "custom-chatbot-rag",
@@ -793,33 +924,40 @@ export const edenAITools: EdenAITool[] = [
 
 // Category groupings for better organization
 export const categoryGroups = {
+  "Trading": {
+    name: "Trading & Finance",
+    icon: "FiTrendingUp",
+    iconColor: "text-green-600",
+    description: "Real-time market analysis and trading tools",
+    subcategories: ["Analysis", "Portfolio", "Signals", "Risk"]
+  },
   "Document": {
     name: "Document Processing",
     icon: "FiFileText",
     iconColor: "text-blue-500",
     description: "Extract, parse, and analyze documents",
-    subcategories: ["Parsing", "OCR", "Financial", "HR", "Identity", "Translation"]
+    subcategories: ["Parsing", "OCR", "Financial", "HR", "Identity", "Translation", "Resume"]
   },
   "Text": {
     name: "Text Analysis",
     icon: "FiType",
     iconColor: "text-green-500",
     description: "Process and understand text content",
-    subcategories: ["Analysis", "Generation", "Translation", "Chatbot", "Code", "Detection", "Privacy", "Extraction", "Moderation"]
+    subcategories: ["Analysis", "Generation", "Translation", "Chatbot", "Code", "Detection", "Privacy", "Extraction", "Moderation", "NLP"]
   },
   "Image": {
     name: "Image Processing",
     icon: "FiImage",
     iconColor: "text-purple-500",
     description: "Analyze, edit, and generate images",
-    subcategories: ["Detection", "Recognition", "Editing", "Generation", "Moderation", "Search"]
+    subcategories: ["Detection", "Recognition", "Editing", "Generation", "Moderation", "Search", "Processing"]
   },
   "Audio": {
     name: "Audio Processing",
     icon: "FiMic",
     iconColor: "text-orange-500",
     description: "Convert and analyze audio content",
-    subcategories: ["Transcription", "Generation"]
+    subcategories: ["Transcription", "Generation", "Synthesis"]
   },
   "Video": {
     name: "Video Analysis",
