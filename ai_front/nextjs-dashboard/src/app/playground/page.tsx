@@ -102,9 +102,18 @@ export default function CodePlayground() {
     URL.revokeObjectURL(url);
   };
 
-  const handleSaveCode = () => {
-    // TODO: Implement save to database
-    console.log("Saving code...", generatedCode);
+  const handleSaveCode = async () => {
+    if (!generatedCode) return;
+    try {
+      await fetch('/api/code-history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: generatedCode.code, language: selectedLanguage })
+      });
+      alert('Code saved');
+    } catch (err) {
+      alert('Failed to save code');
+    }
   };
 
   return (

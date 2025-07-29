@@ -37,18 +37,19 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      // TODO: Implement actual login API call
-      console.log("Login attempt:", formData);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      
-      // TODO: On successful login, redirect to dashboard
-      // const { login } = useAuth();
-      // await login(formData.email, formData.password);
-      // router.push('/dashboard');
-      
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+      if (result?.error) {
+        setErrors({ submit: 'Invalid email or password. Please try again.' });
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (error) {
-      console.error("Login failed:", error);
-      setErrors({ submit: "Invalid email or password. Please try again." });
+      console.error('Login failed:', error);
+      setErrors({ submit: 'Login failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }

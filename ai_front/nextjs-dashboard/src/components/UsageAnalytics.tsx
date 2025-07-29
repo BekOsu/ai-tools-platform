@@ -1,12 +1,16 @@
 "use client";
 
+import { useEffect, useState } from 'react'
+
 export default function UsageAnalytics() {
-  const usage = [
-    { month: "Jan", credits: 25 },
-    { month: "Feb", credits: 40 },
-    { month: "Mar", credits: 32 },
-    { month: "Apr", credits: 28 },
-  ];
+  const [usage, setUsage] = useState<{ month: string; credits: number }[]>([])
+
+  useEffect(() => {
+    fetch('/api/analytics/usage')
+      .then(res => res.json())
+      .then(data => setUsage(data.usage || []))
+      .catch(() => {})
+  }, [])
 
   return (
     <div className="bg-white border border-gray-300 rounded-md p-4">
