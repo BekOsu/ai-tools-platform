@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FiLoader } from "react-icons/fi";
+import { signIn } from 'next-auth/react';
 
 interface GoogleAuthProps {
   onSuccess?: (user: any) => void;
@@ -19,28 +20,10 @@ export default function GoogleAuth({
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
-    
     try {
-      // Simulate Google OAuth flow
-      // In production, you would integrate with Google OAuth API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock successful authentication
-      const mockUser = {
-        id: "google_" + Date.now(),
-        name: "Demo User",
-        email: "demo@gmail.com",
-        avatar: "https://lh3.googleusercontent.com/a/default-user=s96-c",
-        provider: "google",
-        credits: 10.00
-      };
-      
-      // Store user in localStorage for demo
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      
-      onSuccess?.(mockUser);
+      await signIn('google');
     } catch (error) {
-      onError?.("Failed to sign in with Google. Please try again.");
+      onError?.('Failed to sign in with Google.');
     } finally {
       setIsLoading(false);
     }

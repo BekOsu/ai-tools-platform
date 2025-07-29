@@ -71,13 +71,6 @@ export default function SignUpPage() {
     }
   };
 
-  const handleGoogleSuccess = (user: any) => {
-    router.push('/');
-  };
-
-  const handleGoogleError = (error: string) => {
-    setError(error);
-  };
 
   const passwordStrength = () => {
     const password = formData.password;
@@ -165,11 +158,7 @@ export default function SignUpPage() {
 
           {/* Google Sign Up */}
           <div className="mb-6">
-            <GoogleAuth 
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              buttonText="Sign up with Google"
-            />
+            <GoogleAuth buttonText="Sign up with Google" />
           </div>
 
           {/* Divider */}
