@@ -2,6 +2,8 @@
 import { useAuth } from "@/contexts/AuthContext";
 // import { useAIFeatures } from "@/hooks/useApi";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useEffect, useState } from "react";
+import { useProducts } from "@/hooks/useApi";
 import { FiTrendingUp, FiUsers, FiStar, FiActivity, FiClock, FiHeart, FiCode, FiImage } from "react-icons/fi";
 import UsageAnalytics from "@/components/UsageAnalytics";
 import BillingSummary from "@/components/BillingSummary";
@@ -22,6 +24,20 @@ export default function DashboardPage() {
       </div>
     );
   }
+  const [credits, setCredits] = useState(user.credits ?? 0)
+
+  useEffect(() => {
+    fetch('/api/user/credits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: user.email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.credits === 'number') setCredits(data.credits)
+      })
+      .catch(() => {})
+  }, [user.email])
 
   // Mock data for demonstration
   const stats = [
@@ -46,10 +62,10 @@ export default function DashboardPage() {
       icon: <FiHeart className="w-5 h-5" />,
       color: "bg-red-500"
     },
-    { 
-      label: "Credits Left", 
-      value: "$15.69", 
-      change: "-$4.31", 
+    {
+      label: "Credits Left",
+      value: `$${credits}`,
+      change: "",
       icon: <FiTrendingUp className="w-5 h-5" />,
       color: "bg-purple-500"
     },
@@ -62,35 +78,34 @@ export default function DashboardPage() {
     { tool: "Voice Synthesis", action: "Generated audio", time: "2 days ago", status: "failed" },
   ];
 
-  const featuredTools = [
-    { 
+  const [featuredTools, setFeaturedTools] = useState<any[]>([
+    {
       id: "code-playground",
-      name: "AI Code Playground", 
-      description: "Generate code with Claude AI", 
-      badge: "Active", 
+      name: "AI Code Playground",
+      description: "Generate code with Claude AI",
+      badge: "Active",
       color: "bg-green-50 text-green-700 border-green-200",
       link: "/playground",
-      implemented: true
+      implemented: true,
     },
-    { 
-      id: "trading-assistant",
-      name: "Trading Assistant", 
-      description: "Get AI-powered market insights", 
-      badge: "Coming Soon", 
-      color: "bg-gray-50 text-gray-600 border-gray-200",
-      link: "#",
-      implemented: false
-    },
-    { 
-      id: "image-enhancer",
-      name: "Image Enhancer", 
-      description: "AI-powered image processing", 
-      badge: "Coming Soon", 
-      color: "bg-gray-50 text-gray-600 border-gray-200",
-      link: "#",
-      implemented: false
-    },
-  ];
+  ]);
+
+  const { data: products } = useProducts();
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      const tools = products.map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        badge: "Active",
+        color: "bg-green-50 text-green-700 border-green-200",
+        link: p.url || "#",
+        implemented: true,
+      }));
+      setFeaturedTools(tools);
+    }
+  }, [products]);
 
   return (
     <div className="space-y-8">

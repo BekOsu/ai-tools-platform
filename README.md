@@ -94,12 +94,13 @@ ai-project/
    - 🔍 **API Health**: http://localhost:8002/health
    - 🧪 **AI Services Demo**: http://localhost:3000/demo
 
-### **Authentication with Google OAuth**
+### **Authentication with OAuth Providers**
 
-1. Create a Google OAuth client ID and secret
-2. Copy `.env.example` to `.env` and fill in `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `NEXTAUTH_SECRET`
-3. Start the app and use either Google OAuth or email credentials
+1. Create OAuth credentials for Google, Microsoft (Azure AD), and Apple
+2. Copy `.env.example` to `.env` and fill in `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `APPLE_CLIENT_ID`, `APPLE_CLIENT_SECRET`, and `NEXTAUTH_SECRET`
+3. Start the app and sign in with your provider of choice or with email credentials
 4. For email sign up, create an account on the signup page. Sessions are managed by NextAuth
+5. The dashboard automatically loads your current credit balance and product list from the backend API
 
 ### **🐳 Docker Deployment**
 ```bash
