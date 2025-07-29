@@ -23,6 +23,20 @@ export default function DashboardPage() {
       </div>
     );
   }
+  const [credits, setCredits] = useState(user.credits ?? 0)
+
+  useEffect(() => {
+    fetch('/api/user/credits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: user.email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.credits === 'number') setCredits(data.credits)
+      })
+      .catch(() => {})
+  }, [user.email])
 
   // Mock data for demonstration
   const stats = [
@@ -49,7 +63,7 @@ export default function DashboardPage() {
     },
     {
       label: "Credits Left",
-      value: `$${user.credits ?? 0}`,
+      value: `$${credits}`,
       change: "",
       icon: <FiTrendingUp className="w-5 h-5" />,
       color: "bg-purple-500"

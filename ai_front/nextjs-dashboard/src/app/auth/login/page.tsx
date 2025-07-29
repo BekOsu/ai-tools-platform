@@ -6,6 +6,7 @@ import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi";
 import GoogleAuth from "@/components/GoogleAuth";
 import MicrosoftAuth from "@/components/MicrosoftAuth";
 import AppleAuth from "@/components/AppleAuth";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
