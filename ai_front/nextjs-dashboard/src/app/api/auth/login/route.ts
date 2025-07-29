@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   if (!email || !password) {
     return NextResponse.json({ error: 'Missing credentials' }, { status: 400 })
   }
-  const user = verifyUser(email, password)
+  const user = await verifyUser(email, password)
   if (!user) {
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
   }

@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) return null
-        const user = verifyUser(credentials.email, credentials.password)
+        const user = await verifyUser(credentials.email, credentials.password)
         if (!user) return null
         return { id: user.id, name: user.name, email: user.email }
       },
