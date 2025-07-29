@@ -408,10 +408,8 @@ export default function AIFeatures({
       // For EdenAI tools, navigate to the catalog detail page
       window.location.href = `/catalog/${feature.id}`;
     } else {
-      // For implemented features, navigate to their respective pages
-      console.log(`Opening feature: ${feature.title}`);
-      // TODO: Navigate to feature page or open modal
-      alert(`${feature.title} will open here once implemented!`);
+      // For implemented features without a dedicated route, fallback to catalog page
+      window.location.href = `/catalog/${feature.id}`;
     }
   };
 

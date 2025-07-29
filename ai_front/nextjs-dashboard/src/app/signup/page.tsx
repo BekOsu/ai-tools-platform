@@ -54,13 +54,30 @@ export default function SignupPage() {
     setIsLoading(true);
     
     try {
-      // TODO: Implement actual signup API call
-      console.log("Signup attempt:", { ...formData, password: "[HIDDEN]" });
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Signup failed')
+      }
+      await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      })
+      window.location.href = '/dashboard'
     } catch (error) {
-      console.error("Signup failed:", error);
+      console.error('Signup failed:', error)
+      setErrors({ submit: 'Signup failed. Please try again.' })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   };
 

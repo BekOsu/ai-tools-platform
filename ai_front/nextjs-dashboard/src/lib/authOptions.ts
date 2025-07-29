@@ -1,11 +1,26 @@
 import { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import { verifyUser } from '@/data/userStore'
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials) return null
+        const user = verifyUser(credentials.email, credentials.password)
+        if (!user) return null
+        return { id: user.id, name: user.name, email: user.email }
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,

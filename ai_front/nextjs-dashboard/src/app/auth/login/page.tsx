@@ -19,21 +19,18 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful login
-      const mockUser = {
-        id: "demo_user",
-        name: "Demo User",
-        email: email,
-        credits: 5.69
-      };
-      
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      router.push('/');
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      })
+      if (result?.error) {
+        setError('Invalid email or password')
+      } else {
+        router.push('/dashboard')
+      }
     } catch (err) {
-      setError("Invalid email or password");
+      setError('Login failed')
     } finally {
       setIsLoading(false);
     }

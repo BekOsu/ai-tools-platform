@@ -1,15 +1,20 @@
 "use client";
 
+import { useEffect, useState } from 'react'
+
 export default function BillingSummary() {
-  const plan = {
-    name: "Pro",
-    nextPayment: "2024-05-20",
-    amount: "$29.00",
-  };
-  const invoices = [
-    { id: 1, date: "2024-04-20", amount: "$29.00", status: "Paid" },
-    { id: 2, date: "2024-03-20", amount: "$29.00", status: "Paid" },
-  ];
+  const [plan, setPlan] = useState({ name: '', nextPayment: '', amount: '' })
+  const [invoices, setInvoices] = useState<{ id: number; date: string; amount: string; status: string }[]>([])
+
+  useEffect(() => {
+    fetch('/api/billing/summary')
+      .then(res => res.json())
+      .then(data => {
+        setPlan(data.billing.plan)
+        setInvoices(data.billing.invoices)
+      })
+      .catch(() => {})
+  }, [])
 
   return (
     <div className="bg-white border border-gray-300 rounded-md p-4">

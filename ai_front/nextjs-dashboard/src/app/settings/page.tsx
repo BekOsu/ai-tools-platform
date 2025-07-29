@@ -60,9 +60,12 @@ export default function SettingsPage() {
 
     setIsUpdating(true);
     try {
-      // TODO: Call API to delete account
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      alert("Account deleted successfully. You will be logged out.");
+      await fetch('/api/user/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email }),
+      })
+      alert('Account deleted successfully. You will be logged out.');
       await logout();
     } catch (error) {
       console.error("Failed to delete account:", error);
@@ -75,17 +78,15 @@ export default function SettingsPage() {
   const generateApiKey = async (name: string) => {
     setIsUpdating(true);
     try {
-      // TODO: Call API to generate new key
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const newKey = {
-        id: Date.now().toString(),
-        name,
-        key: `ak_${Date.now()}_****************************`,
-        created: new Date().toISOString().split('T')[0],
-        lastUsed: "Never"
-      };
-      setApiKeys([...apiKeys, newKey]);
-      alert("API key generated successfully!");
+      const res = await fetch('/api/api-keys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setApiKeys([...apiKeys, data.key]);
+      alert('API key generated successfully!');
     } catch (error) {
       console.error("Failed to generate API key:", error);
       alert("Failed to generate API key. Please try again.");
@@ -96,12 +97,16 @@ export default function SettingsPage() {
 
   const deleteApiKey = async (id: string) => {
     if (!confirm("Are you sure you want to delete this API key?")) return;
-    
+
     setIsUpdating(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await fetch('/api/api-keys', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      })
       setApiKeys(apiKeys.filter(key => key.id !== id));
-      alert("API key deleted successfully!");
+      alert('API key deleted successfully!');
     } catch (error) {
       console.error("Failed to delete API key:", error);
       alert("Failed to delete API key. Please try again.");

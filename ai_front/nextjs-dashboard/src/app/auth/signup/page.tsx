@@ -51,21 +51,27 @@ export default function SignUpPage() {
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock successful signup
-      const mockUser = {
-        id: "new_user_" + Date.now(),
-        name: formData.name,
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Signup failed')
+      }
+      await signIn('credentials', {
+        redirect: false,
         email: formData.email,
-        credits: 15.00 // New users get more credits
-      };
-      
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      router.push('/');
+        password: formData.password,
+      })
+      router.push('/dashboard')
     } catch (err) {
-      setError("Failed to create account. Please try again.");
+      setError('Failed to create account. Please try again.');
     } finally {
       setIsLoading(false);
     }
