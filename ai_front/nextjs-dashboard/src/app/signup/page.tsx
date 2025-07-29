@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { signIn } from 'next-auth/react';
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -178,7 +179,10 @@ export default function SignupPage() {
           </div>
 
           <div className="mt-4 flex flex-col space-y-2">
-            <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+            <button
+              onClick={() => signIn('google')}
+              className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            >
               Continue with Google
             </button>
             <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">

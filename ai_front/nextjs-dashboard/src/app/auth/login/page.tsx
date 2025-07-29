@@ -39,13 +39,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleSuccess = (user: any) => {
-    router.push('/');
-  };
-
-  const handleGoogleError = (error: string) => {
-    setError(error);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -118,11 +111,7 @@ export default function LoginPage() {
 
           {/* Google Sign In */}
           <div className="mb-6">
-            <GoogleAuth 
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              buttonText="Sign in with Google"
-            />
+            <GoogleAuth buttonText="Sign in with Google" />
           </div>
 
           {/* Divider */}
